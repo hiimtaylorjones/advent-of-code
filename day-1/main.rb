@@ -13,7 +13,7 @@ end
 
 chunks.each do |chunk|
     if chunk[0] == "+"
-        count += chunk[1..-1].to_i
+        count += chunk[1..-1].to_igit ad
     else 
         count -= chunk[1..-1].to_i
     end
