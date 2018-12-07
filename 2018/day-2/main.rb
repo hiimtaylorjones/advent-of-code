@@ -1,8 +1,8 @@
 lines = []
 
-File.open("test-2.txt", "r") do |file|
+File.open("input.txt", "r") do |file|
     file.each_line do |line|
-        lines.push(line)
+        lines.push(line.delete("\n"))
     end
 end
 
@@ -13,7 +13,6 @@ lines.each do |line|
     characters = line.chars
     hash = {}
     characters.each do |char|
-        next if char == "\n"
         if hash.key?(char)
             hash[char] += 1
         else
@@ -38,18 +37,26 @@ def compare_words(word_1, word_2)
     word_1.count(word_2)
 end
 
-compare = lines.first
 high_score = 1
-most_related = nil
+found_matches = []
 
 lines.each do |line|
-    next if line == lines.first
-    common = compare_words(compare, line)
-    if common > high_score
-        most_related = line
+    compare = line
+    lines.each do |line|
+        next if line == lines.first
+        common = compare_words(compare, line)
+        next if common == compare.length
+        if common >=  high_score 
+            high_score = common
+            match = [compare, line]
+            found_matches.push(match)
+        end
     end
 end
 
-puts "Compare string: #{compare}"
-puts "Most related string: #{most_related}"
-puts (compare.chars & most_related.chars).join
+puts found_matches
+best_match = found_matches.last
+
+puts "Best Match (#{high_score} in common):"
+puts "#{best_match[0]} & #{best_match[1]}"
+puts (best_match[0].chars & best_match[1].chars).join
