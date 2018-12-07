@@ -1,6 +1,6 @@
 lines = []
 
-File.open("input.txt", "r") do |file|
+File.open("test-2.txt", "r") do |file|
     file.each_line do |line|
         lines.push(line)
     end
@@ -33,3 +33,23 @@ end
 puts "Two Count: #{two_count}"
 puts "Three Count: #{three_count}"
 puts "Checksum: #{two_count * three_count}"
+
+def compare_words(word_1, word_2)
+    word_1.count(word_2)
+end
+
+compare = lines.first
+high_score = 1
+most_related = nil
+
+lines.each do |line|
+    next if line == lines.first
+    common = compare_words(compare, line)
+    if common > high_score
+        most_related = line
+    end
+end
+
+puts "Compare string: #{compare}"
+puts "Most related string: #{most_related}"
+puts (compare.chars & most_related.chars).join
