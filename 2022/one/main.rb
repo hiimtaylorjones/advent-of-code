@@ -14,18 +14,47 @@ File.open(path, "r") do |reader|
   end
 end
 
-puts calorie_map
-
-leading_index = 1
-leading_value = 0
+leaders = {
+  # First place
+  1 => { 
+    "index" => 0,
+    "value" => 0
+  },
+  # Second place
+  2 => { 
+    "index" => 0,
+    "value" => 0
+  },
+  # Third Place
+  3 => { 
+    "index" => 0,
+    "value" => 0
+  }
+}
 
 calorie_map.keys.each do |key|
-  sum_to_compare = calorie_map[key].sum
-  if leading_value < sum_to_compare 
-    leading_index = key
-    leading_value = sum_to_compare
+  sum = calorie_map[key].sum
+
+  if leaders[1]["value"] < sum
+    leaders[3]["index"] = leaders[2]["index"]
+    leaders[3]["value"] = leaders[2]["value"]
+
+    leaders[2]["index"] = leaders[1]["value"]
+    leaders[2]["value"] = leaders[1]["value"]
+
+    leaders[1]["index"] = key
+    leaders[1]["value"] = sum
+  elsif leaders[2]["value"] < sum
+    leaders[3]["index"] = leaders[2]["index"]
+    leaders[3]["value"] = leaders[2]["value"]
+
+    leaders[2]["index"] = key
+    leaders[2]["value"] = sum
+  elsif leaders[3]["value"] < sum
+    leaders[3]["index"] = key
+    leaders[3]["value"] = sum
   end
 end
 
-puts leading_index
-puts leading_value
+puts leaders
+puts [leaders[1]["value"], leaders[2]["value"], leaders[3]["value"]].sum
