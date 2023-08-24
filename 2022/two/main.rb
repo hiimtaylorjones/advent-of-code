@@ -5,8 +5,8 @@ winning_moves = {
   # A & X -> Rock
   # B & Y -> Paper
   # C & Z -> Scissors
-  "A" => "Z", # 1 point
-  "B" => "Y", # 2 points
+  "A" => "Y", # 1 point
+  "B" => "Z", # 2 points
   "C" => "X"  # 3 points
 }
 
